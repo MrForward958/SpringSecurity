@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Login page</title>
+</head>
+<body>
+
+<form name="f" method="post" action="/process_login">
+<!--    здесь вставляем наш токен csrf, name - ключ, вставит через thymeleaf springSecurity-->
+<!--    Value - вставит также spring security это наш token. В остальные формы это поле вставиться автоматически-->
+    <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
+    <label for="username">Введите имя пользователя: </label>
+<!--    name="username" потому что Spring ждет именно такие названия полей.-->
+    <input type="text" name="username" id="username"/>
+    <br/>
+    <label for="password">Введите пароль: </label>
+<!--    name="password" потому что Spring ждет именно такие названия полей.-->
+    <input type="password" name="password" id="password"/>
+    <br/>
+    <input type="submit" value="Login"/>
+
+    <div th:if="${param.error}" style="color: red">
+        Неправильные имя или пароль
+    </div>
+</form>
+<br/>
+<form th:method="GET" th:action="@{/auth/registration}">
+    <input style="color: green" type="submit" value="Registration">
+</form>
+</body>
+</html>
